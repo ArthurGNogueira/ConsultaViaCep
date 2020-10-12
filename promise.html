@@ -3,21 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+
     <title>testando promise</title>
 </head>
 <body>
-    <script>
-        
-        function receberDados(){
-            window.fetch ('https://viacep.com.br/ws/07262030/json')
-            .then((data) => data.json())
-                .then(function(data){
-                    console.log(data);
-                    console.log(data.logradouro)
-                })
-            }
-        
 
+    <div class="container">
+        <h1>Insira o CEP e receba os dados correspondentes</h1>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-lg txtCep" placeholder="Exemplo: 01011001" aria-span="Insira o CEP" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary btn-lg" type="button" id="button-addon2">Verificar</button>
+            </div>
+          </div>
+
+        <div class="areaDados">
+            
+        </div>
+
+    </div>
+
+    <script>
+        var areaDados = document.querySelector('.areaDados');
+        var btn = document.querySelector('#button-addon2');
+        btn.addEventListener('click', (e) => {
+            var cep = document.querySelector('.txtCep').value;
+            receberDados(cep)
+        });
+
+        function receberDados(cep){
+        this.cep = toString(cep);
+        return window.fetch ('https://viacep.com.br/ws/'+ cep +'/json')
+        .then((data) => data.json())
+        .then(function(data){
+            console.log(data);
+            areaDados.innerHTML = `
+            <ul class="lista">
+                
+                <li><span class="lbl">bairro: </span><a href="#">${data.bairro}</a></li>            
+                <li><span class="lbl">cep: </span><a href="#">${data.cep}</a></li>    
+                <li><span class="lbl">complemento: </span><a href="#">${data.complemento}</a></li>             
+                <li><span class="lbl">ddd: </span><a href="#">${data.ddd}</a></li>             
+                <li><span class="lbl">gia: </span><a href="#">${data.gia}</a></li>           
+                <li><span class="lbl">ibge: </span><a href="#">${data.ibge}</a></li>               
+                <li><span class="lbl">localidade: </span><a href="#">${data.localidade}</a></li>                
+                <li><span class="lbl">logradouro: </span><a href="#">${data.logradouro}</a></li>                
+                <li><span class="lbl">siafi: </span><a href="#">${data.siafi}</a></li>
+                <li><span class="lbl">uf:</span><a href="#">${data.uf}</a></li>
+                
+            </ul>
+            `
+            
+        })
+        .catch(() => {
+            alert('erro!')
+        })           
+        
+    }     
     </script>
 </body>
 </html>
