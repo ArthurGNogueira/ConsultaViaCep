@@ -27,6 +27,21 @@
     </div>
 
     <script>
+
+        function copy(info){
+            //recebendo o text de cada li de acordo com a var info
+            var info = document.querySelector('.lista').childNodes[info].childNodes[1].text;
+            //a função select() depende de um input um de um text area
+            //por isso a necessidade de criar um e passar o valor de info
+            var input = document.body.appendChild(document.createElement("input"));
+            input.value = info;
+            input.select();
+            document.execCommand('copy');
+            input.style.display ='none';
+            alert('Copiado com sucesso!')
+        }
+        
+        
         var areaDados = document.querySelector('.areaDados');
         var btn = document.querySelector('#button-addon2');
         btn.addEventListener('click', (e) => {
@@ -39,23 +54,26 @@
         return window.fetch ('https://viacep.com.br/ws/'+ cep +'/json')
         .then((data) => data.json())
         .then(function(data){
-            console.log(data);
+            for(i in data){
+                data[i] = data[i] == '' ? "Informação não encontrada" : data[i];
+                console.log(data[i]);
+            };
             areaDados.innerHTML = `
             <ul class="lista">
                 
-                <li><span class="lbl">bairro: </span><a href="#">${data.bairro}</a></li>            
-                <li><span class="lbl">cep: </span><a href="#">${data.cep}</a></li>    
-                <li><span class="lbl">complemento: </span><a href="#">${data.complemento}</a></li>             
-                <li><span class="lbl">ddd: </span><a href="#">${data.ddd}</a></li>             
-                <li><span class="lbl">gia: </span><a href="#">${data.gia}</a></li>           
-                <li><span class="lbl">ibge: </span><a href="#">${data.ibge}</a></li>               
-                <li><span class="lbl">localidade: </span><a href="#">${data.localidade}</a></li>                
-                <li><span class="lbl">logradouro: </span><a href="#">${data.logradouro}</a></li>                
-                <li><span class="lbl">siafi: </span><a href="#">${data.siafi}</a></li>
-                <li><span class="lbl">uf:</span><a href="#">${data.uf}</a></li>
+                <li><span class="lbl">bairro: </span><a href="#" onclick="copy(1)">${data.bairro}</a></li>            
+                <li><span class="lbl">cep: </span><a href="#" onclick="copy(3)">${data.cep}</a></li>    
+                <li><span class="lbl">complemento: </span><a href="#" onclick="copy(5)">${data.complemento}</a></li>             
+                <li><span class="lbl">ddd: </span><a href="#" onclick="copy(7)">${data.ddd}</a></li>             
+                <li><span class="lbl">gia: </span><a href="#" onclick="copy(9)">${data.gia}</a></li>           
+                <li><span class="lbl">ibge: </span><a href="#" onclick="copy(11)">${data.ibge}</a></li>               
+                <li><span class="lbl">localidade: </span><a href="#" onclick="copy(13)">${data.localidade}</a></li>                
+                <li><span class="lbl">logradouro: </span><a href="#" onclick="copy(15)">${data.logradouro}</a></li>                
+                <li><span class="lbl">siafi: </span><a href="#" onclick="copy(17)">${data.siafi}</a></li>
+                <li><span class="lbl">uf:</span><a href="#" onclick="copy(19)">${data.uf}</a></li>
                 
             </ul>
-            `
+            `;
             
         })
         .catch(() => {

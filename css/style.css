@@ -12,6 +12,7 @@ p{
 }
 a{
     text-decoration: none;
+    color: black;
 }
 *{
     outline: none;
@@ -31,7 +32,8 @@ a{
     padding-top: 50px;
 }
 .lbl{
-    float: left;    
+    float: left;
+    color: gray;    
 }
 li{
     min-width: 500px;
